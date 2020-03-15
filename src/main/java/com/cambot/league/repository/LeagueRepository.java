@@ -1,6 +1,7 @@
 package com.cambot.league.repository;
 
 import com.cambot.league.models.SummonerResponse;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Repository;
@@ -16,13 +17,15 @@ public class LeagueRepository {
     @Value("${riot.apiKey}")
     private String apiKey;
 
+    @Autowired RestTemplate restTemplate;
+
     public ResponseEntity getSummoner(String summoner) {
 
         // Set api key in header
-        HttpHeaders headers = new HttpHeaders();
-        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-        headers.set("X-Riot-Token", apiKey);
-        HttpEntity<String> entity = new HttpEntity<String>(headers);
+     //   HttpHeaders headers = new HttpHeaders();
+   //     headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+  //      headers.set("X-Riot-Token", apiKey);
+   //     HttpEntity<String> entity = new HttpEntity<String>(headers);
 
         // Build custom URL for passed in summoner
         UriComponents uri = UriComponentsBuilder.fromHttpUrl("https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name/{summoner}")
@@ -30,8 +33,9 @@ public class LeagueRepository {
         String urlString = uri.toString();
 
         // Call riot API
-        RestTemplate restTemplate = new RestTemplate();
-        return restTemplate.exchange(urlString, HttpMethod.GET, entity, SummonerResponse.class);
+ //       RestTemplate restTemplate = new RestTemplate();
+        return  restTemplate.getForEntity(urlString, SummonerResponse.class);
+   //     return restTemplate.exchange(urlString, HttpMethod.GET, entity, SummonerResponse.class);
     }
 
 }
