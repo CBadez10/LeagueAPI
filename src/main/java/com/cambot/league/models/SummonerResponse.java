@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class SummonerResponse {
-    private String profileIconId;
+    private int profileIconId;
     private String name;
     private String puuid;
     private long summonerLevel;
