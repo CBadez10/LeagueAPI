@@ -1,5 +1,6 @@
 package com.cambot.league.service;
 
+import com.cambot.league.models.GameCustomizationObject;
 import com.cambot.league.models.SummonerResponse;
 import com.cambot.league.repository.LeagueRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,9 +13,9 @@ public class LeagueService {
     @Autowired
     LeagueRepository leagueRepository;
 
-    public ResponseEntity getSummoner(String summoner) {
+    public ResponseEntity<GameCustomizationObject> getSummoner(String summoner) {
        SummonerResponse summonerResponse = leagueRepository.getSummoner(summoner);
 
-       summonerResponse
+       return leagueRepository.getSummonerInfo(summonerResponse.getId());
     }
 }
